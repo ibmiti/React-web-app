@@ -1,6 +1,9 @@
+// importing React library
 import React from 'react';
-import { handleResponse } from '../../helpers';
+// importing configuration files and component files and css files below
+import { handleResponse } from '../../helpers'; 
 import { API_URL } from '../../config';
+import Loading from '../common/Loading';
 import './Table.css';
 
 class List extends React.Component {
@@ -46,8 +49,14 @@ class List extends React.Component {
 
 
     render() {
+    
+        // render only loading component, if loading state is set to true
         if (this.state.loading) {
-            return <div>Loading...</div>
+            return <div className="loading-container"><Loading /></div>
+        }
+        // render only error message, if error occured while fetching data
+        if (this.state.error) {
+            return <div className="error">{this.state.error}</div>
         }
 
         return (
@@ -65,7 +74,8 @@ class List extends React.Component {
                 {this.state.currencies.map((currency) => (
                   <tr key={currency.id}>
                     <td>
-                      <span className="Table-rank">{currency.rank}</span>
+                            <span className="Table-rank">{currency.rank}</span>
+                            {currency.name}
                     </td> 
                     <td>
                       <span className="Table-dollar">$ {currency.price} </span>
